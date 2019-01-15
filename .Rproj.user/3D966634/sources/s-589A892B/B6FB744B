@@ -5,15 +5,15 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "0",
+    "hash" : "2798072677",
     "id" : "B6FB744B",
-    "lastKnownWriteTime" : 1547533441,
-    "last_content_update" : 1547533441604,
+    "lastKnownWriteTime" : 1547541830,
+    "last_content_update" : 1547541830278,
     "path" : "~/Desktop/School document/R-fun-project/Manga/manga.R",
     "project_path" : "manga.R",
     "properties" : {
-        "cursorPosition" : "29,36",
-        "scrollLine" : "25"
+        "cursorPosition" : "24,32",
+        "scrollLine" : "24"
     },
     "relative_order" : 1,
     "source_on_save" : false,

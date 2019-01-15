@@ -23,7 +23,6 @@ df_manga_groups <-
   mutate(rank = as.numeric(rank))
   
 # plot the top 30 manga by years
-
 ggplot(slice(df_manga_groups, 1:30), aes(year, rank))+
   geom_point()+
   geom_text(aes(label=title, 
