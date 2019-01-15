@@ -73,3 +73,29 @@ Branch master set up to track remote branch master from origin.
 Everything up-to-date
 ]0;~/Desktop/School document/R-fun-project/MangaMacBook-Air:Manga EmilyWang$ git add .
 ]0;~/Desktop/School document/R-fun-project/MangaMacBook-Air:Manga EmilyWang$ git add .push -u origin master[5Pconfig user.name--global user.name "Liying Wang"[4PMy Name"user.name[Kpush -u origin master[1Pcommit -am 'initial'add .[Kcommit -am 'initial'push -u origin master[1Pcommit -am 'initial'[1P'[1P'[1P'[1P'[1P'[1P'[1P'u'p'd'a't'e's'
+[master 1456569] updates
+ Committer: Liying Wang <EmilyWang@MacBook-Air.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly:
+
+    git config --global user.name "Your Name"
+    git config --global user.email you@example.com
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 5 files changed, 71 insertions(+), 10 deletions(-)
+]0;~/Desktop/School document/R-fun-project/MangaMacBook-Air:Manga EmilyWang$ git config --global user.name "Liying Wang"
+]0;~/Desktop/School document/R-fun-project/MangaMacBook-Air:Manga EmilyWang$ git config --global user.name "Liying Wang"[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[19Pmmit -am 'updates'add .[Kpush -u origin master[5Pconfig user.name
+Liying Wang
+]0;~/Desktop/School document/R-fun-project/MangaMacBook-Air:Manga EmilyWang$ git config --global user.email you@example.com [A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1P.com
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1P.com[1P.com[1P.com[1P.com[1P.com[1P.comg.comm.coma.comi.coml.com[C[C[C[1P@gmail.com[1P@gmail.com[1P@gmail.comj@gmail.coma@gmail.comy@gmail.comb@gmail.comi@gmail.com [A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cn@gmail.comm[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C5@gmail.com[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C0@gmail.com[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C2@gmail.com[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+[C[C[C[C
+]0;~/Desktop/School document/R-fun-project/MangaMacBook-Air:Manga EmilyWang$ git config --global user.email
+jaybin502@gmail.com
+]0;~/Desktop/School document/R-fun-project/MangaMacBook-Air:Manga EmilyWang$ git config --global user.email jaybin502@gmail..com[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cuser.name[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C--global user.name "Liying Wang"[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[19Pmmit -am 'updates'add .[K
+]0;~/Desktop/School document/R-fun-project/MangaMacBook-Air:Manga EmilyWang$ git add .config --global user.email jaybin502@gmail..com[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cuser.name[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C--global user.name "Liying Wang"[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[19Pmmit -am 'updates'
