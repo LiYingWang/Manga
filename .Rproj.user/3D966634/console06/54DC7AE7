@@ -1,0 +1,12 @@
+]0;~/Desktop/School document/R-fun-project/Manga[?1034hMacBook-Air:Manga EmilyWang$ [KMacBook-Air:Manga EmilyWang$ git remote add origin https://github.com/LiYin gWang/Manga.git
+fatal: Not a git repository (or any of the parent directories): .git
+]0;~/Desktop/School document/R-fun-project/MangaMacBook-Air:Manga EmilyWang$ got init
+bash: got: command not found
+]0;~/Desktop/School document/R-fun-project/MangaMacBook-Air:Manga EmilyWang$ git init
+Initialized empty Git repository in /Users/EmilyWang/Desktop/School document/R-fun-project/Manga/.git/
+]0;~/Desktop/School document/R-fun-project/MangaMacBook-Air:Manga EmilyWang$ git remote add origin https://github.com/LiYin gWang/Manga.git
+]0;~/Desktop/School document/R-fun-project/MangaMacBook-Air:Manga EmilyWang$ git push -u origin master
+error: src refspec master does not match any.
+error: failed to push some refs to 'https://github.com/LiYingWang/Manga.git'
+]0;~/Desktop/School document/R-fun-project/MangaMacBook-Air:Manga EmilyWang$ git add .
+]0;~/Desktop/School document/R-fun-project/MangaMacBook-Air:Manga EmilyWang$ git commit -am 'initial'
