@@ -106,7 +106,7 @@ top_manga_urls <-
   html_attr('href') 
 
 top_manga_urls <-       
-  str_glue("https://www.anime-planet.com/{top_manga_urls}")
+  str_glue("https://www.anime-planet.com{top_manga_urls}")
 
 # we will go to the page for each story and get the user stats
 manga_story_stats <- 
