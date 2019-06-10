@@ -133,7 +133,8 @@ manga_story_tags <-
 # convert the lists of tables to one big table 
 df <- 
   rbindlist(manga_story_tags, idcol = 'rank') %>% 
-  mutate(rank = as.character(rank))
+  mutate(rank = as.character(rank)) %>% 
+  mutate(text = str_remove_all(text, "\\n"))
 
 # combine manga top 100 info and tags   
 df_manga_t100_tags <-
@@ -268,7 +269,4 @@ ggplot(fre_year_groups,
   facet_wrap(~year_2groups) +
   theme(legend.position="none") +
   labs(y = "before 2010", x = NULL)
-
-
-
 

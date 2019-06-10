@@ -1,9 +1,9 @@
 {
-    "path" : "~/Desktop/School document/R-fun-project/Manga",
-    "sortOrder" : [
+    "path": "~/Desktop/School document/R-fun-project/Manga",
+    "sortOrder": [
         {
-            "ascending" : true,
-            "columnIndex" : 2
+            "ascending": true,
+            "columnIndex": 2
         }
     ]
 }
