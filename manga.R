@@ -16,36 +16,43 @@ info_manga <-
   html_nodes("td.tableYear,
              .tableTitle,
              td.tableRank") %>%
-  html_text()
+  html_text() %>% 
+  na_if("")
 #--------------------------------------------
+
 # tidy the data...
-df_manga_top_60 <-
+df_manga_top_100 <-
   matrix(info_manga,
          ncol = 3,
          byrow = TRUE) %>%
   as_data_frame() %>%
   rename_at(vars(c('V1', 'V2', 'V3')),
             ~ c('rank', 'title', 'year')) %>%
-  # covert chracter to numeric
+  # covert character to numeric
   mutate(rank = as.numeric(rank),
          # make subset for every rank 10
-         # covert numeric to chracter
+         # covert numeric to character
          rank_groups = as.character(cut_interval(
            1:nrow(.),
            n = 10,
-           labels = FALSE
-         ))) %>%
+           labels = FALSE))) %>%
+  # need to update the NA with correct year periodically
+  mutate(year = replace_na(year, "2019")) %>% 
+  mutate(year = as.numeric(year),
+         period = case_when(
+    `year` %in% 1989:2000 ~ "1989-2000",
+    `year` %in% 2001:2010 ~ "2001-2010",
+    `year` %in% 2011:2020 ~ "2011-2020",
+    TRUE ~ "other")) %>%
+  mutate(year = as.factor(year)) %>% 
   # make sure they are in order by rank
-  arrange(rank) %>%
-  # keep only top 60
-  slice(1:60)
+  arrange(rank)
+# keep only top 60
+# slice(1:60)
 
-# add value to blank cells
-df_manga_top_60$year[df_manga_top_60$year==""] <- "2018"  
-
-# plot the top 60 manga by year
+# plot the top 100 manga by year
 library(ggrepel)
-ggplot(df_manga_top_60,
+ggplot(df_manga_top_100,
        aes(year, rank)) +
   geom_point() +
   geom_text_repel(aes(label = title,
@@ -53,23 +60,24 @@ ggplot(df_manga_top_60,
   theme_minimal() +
   theme(legend.position = "none",
         plot.title = element_text(hjust = 0.5)) +
-  ggtitle("Top 60 Manga from anime-planet.com") +
-  scale_y_reverse(limits = c(60, 1), 
-                  breaks = c(seq(60,1,by = -10), 1))
+  ggtitle("Top 100 Manga from anime-planet.com") +
+  scale_y_reverse(limits = c(100, 1), 
+                  breaks = c(seq(100, 1,by = -10), 1)) +
+  facet_wrap(~ period, ncol=1, scales = "free") 
 
-#ggsave("top60-manga.png")
+#ggsave("top100-manga.png")
 
 # bar plot by count
-ggplot(df_manga_top_60) +
+ggplot(df_manga_top_100) +
   geom_bar(aes(year, fill = rank_groups), position= 'dodge') +
   scale_y_continuous(limits = c(0,6), breaks = c(seq(0,6,by = 2), 6))
 
 # bar plot by proportion
-ggplot(df_manga_top_60) +
+ggplot(df_manga_top_100) +
   geom_bar(aes(year, y = ..prop.., fill = rank_groups), position= 'fill')
 
 # polar plot
-bar <- ggplot(df_manga_top_60) + 
+bar <- ggplot(df_manga_top_100) + 
   geom_bar(aes(year, fill = rank_groups), 
     show.legend = TRUE,
     width = 1
@@ -82,7 +90,7 @@ bar + coord_polar()
 
 # for categorical variable, transform the chr to factor and reverse the order
 cate <-
-df_manga_top_60 %>% 
+df_manga_top_100 %>% 
   mutate(rank_groups = factor(rank_groups),
          rank_groups = factor(rank_groups, levels = rev(levels(rank_groups))),
          top10 = ifelse(rank_groups == "1", 'top10', 'not top10'))
