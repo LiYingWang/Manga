@@ -52,8 +52,9 @@ df_manga_top_100 <-
 
 # plot the top 100 manga by year
 library(ggrepel)
-ggplot(df_manga_top_100,
-       aes(year, rank)) +
+df_manga_top_100 %>% 
+  slice(1:50) %>% 
+  ggplot(aes(year, rank)) +
   geom_point() +
   geom_text_repel(aes(label = title,
                       color = rank_groups)) +
@@ -62,8 +63,8 @@ ggplot(df_manga_top_100,
         plot.title = element_text(hjust = 0.5)) +
   ggtitle("Top 100 Manga from anime-planet.com") +
   scale_y_reverse(limits = c(100, 1), 
-                  breaks = c(seq(100, 1,by = -10), 1)) +
-  facet_wrap(~ period, ncol=1, scales = "free") 
+                  breaks = c(seq(100, 1,by = -10), 1))
+  #facet_wrap(~ period, ncol=1, scales = "free") 
 
 #ggsave("top100-manga.png")
 
