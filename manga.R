@@ -34,17 +34,19 @@ df_manga_top_100 <-
          # covert numeric to character
          rank_groups = as.character(cut_interval(
            1:nrow(.),
-           n = 10,
+           n = 4,
            labels = FALSE))) %>%
   # need to update the NA with correct year periodically
   mutate(year = replace_na(year, "2019")) %>% 
   mutate(year = as.numeric(year),
-         period = case_when(
-    `year` %in% 1989:2000 ~ "1989-2000",
-    `year` %in% 2001:2010 ~ "2001-2010",
-    `year` %in% 2011:2020 ~ "2011-2020",
-    TRUE ~ "other")) %>%
+         period = case_when(`year` %in% 1989:2000 ~ "1989-2000",
+                            `year` %in% 2001:2010 ~ "2001-2010",
+                            `year` %in% 2011:2020 ~ "2011-2020",
+                            TRUE ~ "other")) %>%
   mutate(year = as.factor(year)) %>% 
+  mutate(type = ifelse(grepl("(Light Novel)", title),
+                       "light novel", "manga")) %>% 
+  mutate(title = str_remove(title, fixed("(Light Novel)"))) %>% 
   # make sure they are in order by rank
   arrange(rank)
 # keep only top 60
@@ -54,19 +56,19 @@ df_manga_top_100 <-
 library(ggrepel)
 df_manga_top_100 %>% 
   slice(1:50) %>% 
+  #filter(rank_groups %in% c("1","2")) %>% 
   ggplot(aes(year, rank)) +
   geom_point() +
-  geom_text_repel(aes(label = title,
-                      color = rank_groups)) +
+  geom_text_repel(aes(label = title, color = type)) +
+  scale_color_manual(values = c("darkgreen", "blue4")) +
   theme_minimal() +
-  theme(legend.position = "none",
+  theme(legend.position = "bottom",
         plot.title = element_text(hjust = 0.5)) +
-  ggtitle("Top 100 Manga from anime-planet.com") +
-  scale_y_reverse(limits = c(100, 1), 
-                  breaks = c(seq(100, 1,by = -10), 1))
-  #facet_wrap(~ period, ncol=1, scales = "free") 
+  ggtitle("Top 50 Manga from anime-planet.com") +
+  scale_y_reverse(limits = c(50, 1), 
+                  breaks = c(seq(50, 1,by = -10), 1))
 
-#ggsave("top100-manga.png")
+#ggsave("top50-manga.png")
 
 # bar plot by count
 ggplot(df_manga_top_100) +
