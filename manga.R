@@ -7,6 +7,7 @@ library(rvest)
 library(data.table)
 library(ggbeeswarm)
 library(ggridges)
+library(viridis)
 top_manga <-
   read_html("https://www.anime-planet.com/manga/top-manga")
 
@@ -32,7 +33,7 @@ df_manga_top_100 <-
   mutate(rank = as.numeric(rank),
          # make subset for every rank 10
          # covert numeric to character
-         rank_groups = as.character(cut_interval(
+         rank_groups = as.factor(cut_interval(
            1:nrow(.),
            n = 4,
            labels = FALSE))) %>%
@@ -43,28 +44,29 @@ df_manga_top_100 <-
                             `year` %in% 2001:2010 ~ "2001-2010",
                             `year` %in% 2011:2020 ~ "2011-2020",
                             TRUE ~ "other")) %>%
-  mutate(year = as.factor(year)) %>% 
   mutate(type = ifelse(grepl("(Light Novel)", title),
                        "light novel", "manga")) %>% 
-  mutate(title = str_remove(title, fixed("(Light Novel)"))) %>% 
+  mutate(title = str_remove(title, "\\(Light Novel\\)")) %>% 
+  mutate(year = as.factor(year),
+         type = as.factor(type)) %>% 
   # make sure they are in order by rank
   arrange(rank)
 # keep only top 60
 # slice(1:60)
 
-# plot the top 100 manga by year
+# plot the top 50 manga by year
 library(ggrepel)
 df_manga_top_100 %>% 
   slice(1:50) %>% 
-  #filter(rank_groups %in% c("1","2")) %>% 
   ggplot(aes(year, rank)) +
-  geom_point() +
-  geom_text_repel(aes(label = title, color = type)) +
-  scale_color_manual(values = c("darkgreen", "blue4")) +
+  geom_point(aes(color = type)) +
+  scale_colour_viridis_d(name = "type", direction = -1,
+                         labels = c("light\nnovel", "manga")) +
+  geom_text_repel(aes(label = title, color = type), size = 3) +
   theme_minimal() +
-  theme(legend.position = "bottom",
+  theme(legend.position = "right",
         plot.title = element_text(hjust = 0.5)) +
-  ggtitle("Top 50 Manga from anime-planet.com") +
+  labs(title = "Top 50 Manga from anime-planet.com") +
   scale_y_reverse(limits = c(50, 1), 
                   breaks = c(seq(50, 1,by = -10), 1))
 
@@ -72,40 +74,55 @@ df_manga_top_100 %>%
 
 # bar plot by count
 ggplot(df_manga_top_100) +
-  geom_bar(aes(year, fill = rank_groups), position= 'dodge') +
-  scale_y_continuous(limits = c(0,6), breaks = c(seq(0,6,by = 2), 6))
+  geom_bar(aes(year, fill = rank_groups)) +
+  scale_y_continuous(limits = c(0,16), breaks = c(seq(0,16,by = 2), 16)) +
+  scale_fill_viridis_d(name = "Rank",
+                       labels = c("1-25", "26-50", "51-75", "76-100")) +
+  theme_minimal()
 
 # bar plot by proportion
 ggplot(df_manga_top_100) +
-  geom_bar(aes(year, y = ..prop.., fill = rank_groups), position= 'fill')
+  geom_bar(aes(year, y = ..prop.., fill = rank_groups), position= 'fill') +
+  scale_fill_viridis_d()
 
 # polar plot
-bar <- ggplot(df_manga_top_100) + 
-  geom_bar(aes(year, fill = rank_groups), 
-    show.legend = TRUE,
-    width = 1
-  ) + 
+ggplot(df_manga_top_100) + 
+  geom_bar(aes(year, fill = rank_groups), width = 1) + 
   theme(aspect.ratio = 1) +
-  labs(x = NULL, y = NULL)
+  labs(x = NULL, y = NULL) +
+  scale_fill_viridis_d(name = "Rank",
+                       labels = c("1-25", "26-50", "51-75", "76-100")) +
+  coord_flip() +
+  coord_polar()
 
-bar + coord_flip()
-bar + coord_polar()
-
-# for categorical variable, transform the chr to factor and reverse the order
+# reverse the order of factor for later count plot
 cate <-
 df_manga_top_100 %>% 
-  mutate(rank_groups = factor(rank_groups),
-         rank_groups = factor(rank_groups, levels = rev(levels(rank_groups))),
-         top10 = ifelse(rank_groups == "1", 'top10', 'not top10'))
-
-ggplot(cate) +
-  geom_count(aes(year, y = rank_groups, color = ..n..))+
+  mutate(rank_groups = factor(rank_groups, 
+                              levels = rev(levels(rank_groups))))
+# plot by count
+ggplot(cate, aes(year, y = rank_groups)) +
+  geom_count(aes(color = ..n..)) +
   guides(color = 'legend') +
-  scale_color_gradient(high = "#3f0081", low = "#8f7ee2")
-  
-# original: high = "#132B43", low = "#56B1F7"; purple: high = "#3f0081", low = "	#8f7ee2"
+  scale_color_viridis_c(direction = -1) +
+  scale_y_discrete(labels= c("76-100", "51-75", "26-50", "1-25")) +
+  theme_minimal() +
+  labs(x="", y= "Rank")
 
-# boxplot
+# flipped boxplot based on the order of rank
+df_manga_top_100 %>% 
+  mutate(year = fct_reorder(year, rank, .desc = TRUE)) %>% 
+  #remove above line to get the year order 
+  ggplot(aes(x=year, y=rank, fill=year)) +
+  geom_boxplot() +
+  geom_jitter(color="grey", alpha=0.6, size=0.9) +
+  scale_fill_viridis(discrete=TRUE, direction = -1) +
+  scale_y_reverse(limits = c(100, 1), 
+                  breaks = c(seq(100, 1,by = -10), 1)) +
+  theme_minimal() +
+  theme(legend.position="none") +
+  coord_flip() +
+  labs(x="", y= "Rank")
 
 #---------------------stats-----------------------
 # plot the top manga by read/reading/want to read
