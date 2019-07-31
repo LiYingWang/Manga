@@ -111,18 +111,17 @@ ggplot(cate, aes(year, y = rank_groups)) +
 
 # flipped boxplot based on the order of rank
 df_manga_top_100 %>% 
-  mutate(year = fct_reorder(year, rank, .desc = TRUE)) %>% 
-  #remove above line to get the year order 
+  #mutate(year = fct_reorder(year, rank)) %>% 
+  #remove above line to get order in year, .desc = TRUE can reverse the order 
   ggplot(aes(x=year, y=rank, fill=year)) +
   geom_boxplot() +
   geom_jitter(color="grey", alpha=0.6, size=0.9) +
-  scale_fill_viridis(discrete=TRUE, direction = -1) +
+  scale_fill_viridis(discrete=TRUE) +
   scale_y_reverse(limits = c(100, 1), 
                   breaks = c(seq(100, 1,by = -10), 1)) +
   theme_minimal() +
   theme(legend.position="none") +
-  coord_flip() +
-  labs(x="", y= "Rank")
+  labs(x="", y= "Rank from top 1 to 100")
 
 #---------------------stats-----------------------
 # plot the top manga by read/reading/want to read
