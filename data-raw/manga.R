@@ -8,17 +8,24 @@ library(data.table)
 library(ggbeeswarm)
 library(ggridges)
 library(viridis)
-top_manga <-
-  read_html("https://www.anime-planet.com/manga/top-manga")
+library(purrr)
+
+# create base url for multi-page
+url <- "https://www.anime-planet.com/manga/top-manga?page="
 
 # download data from URL
 info_manga <-
-  top_manga %>%
-  html_nodes("td.tableYear,
-             .tableTitle,
-             td.tableRank") %>%
-  html_text() %>% 
-  na_if("")
+  url %>%
+  map2_chr(1:3, paste0) %>% 
+  map(. %>% 
+        read_html() %>% 
+        html_nodes("td.tableYear,
+                   .tableTitle,
+                   td.tableRank") %>%
+  html_text()) %>% 
+  na_if("") %>% 
+  unlist()
+
 #--------------------------------------------
 
 # tidy the data...
@@ -50,9 +57,9 @@ df_manga_top_100 <-
   mutate(year = as.factor(year),
          type = as.factor(type)) %>% 
   # make sure they are in order by rank
-  arrange(rank)
-# keep only top 60
-# slice(1:60)
+  arrange(rank) %>% 
+  slice(1:100)
+# keep only top 100
 
 # plot the top 50 manga by year
 library(ggrepel)
@@ -78,22 +85,8 @@ ggplot(df_manga_top_100) +
   scale_y_continuous(limits = c(0,16), breaks = c(seq(0,16,by = 2), 16)) +
   scale_fill_viridis_d(name = "Rank",
                        labels = c("1-25", "26-50", "51-75", "76-100")) +
-  theme_minimal()
-
-# bar plot by proportion
-ggplot(df_manga_top_100) +
-  geom_bar(aes(year, y = ..prop.., fill = rank_groups), position= 'fill') +
-  scale_fill_viridis_d()
-
-# polar plot
-ggplot(df_manga_top_100) + 
-  geom_bar(aes(year, fill = rank_groups), width = 1) + 
-  theme(aspect.ratio = 1) +
-  labs(x = NULL, y = NULL) +
-  scale_fill_viridis_d(name = "Rank",
-                       labels = c("1-25", "26-50", "51-75", "76-100")) +
   coord_flip() +
-  coord_polar()
+  theme_minimal()
 
 # reverse the order of factor for later count plot
 cate <-
@@ -106,6 +99,7 @@ ggplot(cate, aes(year, y = rank_groups)) +
   guides(color = 'legend') +
   scale_color_viridis_c(direction = -1) +
   scale_y_discrete(labels= c("76-100", "51-75", "26-50", "1-25")) +
+  coord_flip() +
   theme_minimal() +
   labs(x="", y= "Rank")
 
@@ -119,6 +113,7 @@ df_manga_top_100 %>%
   scale_fill_viridis(discrete=TRUE) +
   scale_y_reverse(limits = c(100, 1), 
                   breaks = c(seq(100, 1,by = -10), 1)) +
+  coord_flip() +
   theme_minimal() +
   theme(legend.position="none") +
   labs(x="", y= "Rank from top 1 to 100")
@@ -128,9 +123,13 @@ df_manga_top_100 %>%
 
 # get page for each story
 top_manga_urls <- 
-  top_manga %>% 
-  html_nodes("td a") %>%
-  html_attr('href') 
+  url %>% 
+  map2_chr(1:3, paste0) %>% 
+  map(. %>% 
+        read_html() %>% 
+        html_nodes("td a") %>%
+        html_attr('href')) %>% 
+  unlist()
 
 top_manga_urls <-       
   str_glue("https://www.anime-planet.com{top_manga_urls}")
@@ -184,7 +183,7 @@ tags_all <-
 
 tags_com <-
   tags_all %>%  
-  filter(n > 11) %>%
+  filter(n > 15) %>%
   filter(!text %in% c("Manhwa", "Full Color", 
                       "Webtoon", "Light Novel", 
                       "Adapted to Anime")) %>% 
@@ -215,9 +214,10 @@ ggplot(rate_tags,
   geom_boxplot() +
   #geom_quasirandom(alpha = 0.8) +
   geom_beeswarm(alpha = 0.7) +
+  coord_flip() +
   theme_minimal() +
   scale_y_reverse(limits = c(100, 1), 
-                  breaks = c(seq(100,1,by = -10), 1)) +
+                  breaks = c(seq(100,1, by = -10), 1)) +
   labs(y = "rank", x ="genre", title = "Rank for Popular genre in Top 100 manga")
 
 # ridge plot for rank
@@ -237,12 +237,16 @@ rate_tags %>%
   scale_x_continuous(expand = c(0.01, 0)) +
   theme_ridges()
 
-# plot barplot for years by commen tags
+# plot barplot for years by common tags
 rate_tags %>% 
   ggplot() + 
   geom_bar(aes(year)) +
+  facet_wrap(~text,
+             ncol = 2) +
   theme_minimal() +
-  facet_wrap(~text)
+  labs(y = "Number of manga per year") +
+  theme(axis.text.x = element_text(angle = 90, 
+                                   vjust = 0.5)) 
 
 #----------------------patterns of tags------------------
 library(scales)
@@ -253,7 +257,7 @@ df_manga_t100_tags %>%
   mutate(rank_2groups = ifelse(rank < 51, "1-50", "51-100"),
          year_2groups = ifelse(year < 2010, "before 2010", "after 2010"))
 
-# plot the comparision of genre frequency of manga for different rating groups 
+# plot the comparison of genre frequency of manga for different rating groups 
 fre_rank_groups <- 
   manga_t100_tags_groups %>%
   count(rank_2groups, text) %>%
@@ -273,9 +277,9 @@ ggplot(fre_rank_groups,
   scale_color_gradient(limits = c(0, 0.01), low = "darkslategray4", high = "red") +
   facet_wrap(~rank_2groups) +
   theme(legend.position="none") +
-  labs(y = "Top 51-100", x = NULL)
+  labs(y = "Top 1-50", x = NULL)
 
-# plot the comparision of genre frequency of manga for different time periods
+# plot the comparison of genre frequency of manga for different time periods
 fre_year_groups <- 
   manga_t100_tags_groups %>%
   count(year_2groups, text) %>%
