@@ -14,6 +14,8 @@ library(viridis)
 library(purrr)
 ```
 
+# Introduction
+
 Manga are Japanese comics or graphic novels that are very popular in the
 present day, especially in Asia. This is my exploration of top 100 Manga
 in recent years. The data is collected from
@@ -71,7 +73,13 @@ df_manga_top_100 <-
   slice(1:100)
 ```
 
-What are those top 100 Manga?
+## What are those top 100 Manga?
+
+We can see that there are many popular Manga in recent years after 2010
+that shows the more recent Manga, the more popular. However, there are
+some Manga in top 5 in the earlier time, such as Fullmetal Alchemist,
+Berserk, and One piece, representing the classic ones, especially
+Fullmetal Alchemist, also one of my favorites.
 
 ``` r
 # plot the top 50 Manga by year
@@ -95,8 +103,13 @@ df_manga_top_100 %>%
 
 ![](Manga-data-explore_files/figure-gfm/plot-top-50-1.png)<!-- -->
 
-Take a look at the number and proportion of top 100 Manga across
-different years
+## What are the ranking of Manga per year?
+
+The bar plot shows that high rank Manga (top 1-25) seem distribute
+evenly across years, but some more in 2016-2018. Despite the total
+number of Manga per year increasing after 2012, the proportion of low
+rank ones (top 76-100) are also higher. We can see that Manga in 2015
+and 2020 seem have lower rank in general in the box plot.
 
 ``` r
 # bar plot by count over time 
@@ -174,7 +187,12 @@ df <-
   mutate(text = str_remove_all(text, "\\n"))
 ```
 
-What are the popular genre based on the top 100 Manga?
+## What are popular genre based on the top 100 Manga?
+
+Drama is the most popular one, followed by action, fantasy, comedy, and
+romance. Among those genre, “Seinen” is a type of Manga targeting
+audience of young generation that could cover a wide range of topics.
+“BL” is also a special genre that means Boys Love.
 
 ``` r
 # combine manga top 100 info and tags   
@@ -219,7 +237,11 @@ ggplot(tags_com,
 
 ![](Manga-data-explore_files/figure-gfm/genre-top-manga-1.png)<!-- -->
 
-How those different popular genre relate to years?
+## What is the relationship between popular genre and years?
+
+The box plot shows that Seinen is a common popular genre across years,
+followed by action. It also shows that BL and Manga based on a web novel
+appear and become popular appear after 2012.
 
 ``` r
 # extract common tags to a list
@@ -252,7 +274,10 @@ ggplot(rate_tags,
 
 ![](Manga-data-explore_files/figure-gfm/genre-years-relation-1.png)<!-- -->
 
-How those genre become popular over time?
+## How those genre become popular over time?
+
+The histogram plots show that most topics become popular after 2012,
+especially drama, comedy, and action.
 
 ``` r
 # plot barplot for years by common tags
@@ -281,12 +306,17 @@ manga_t100_tags_groups <-
 df_manga_t100_tags %>% 
   mutate(rank = as.numeric(rank), year = as.numeric(year)) %>% 
   mutate(rank_2groups = ifelse(rank < 51, "1-50", "51-100"),
-         year_2groups = ifelse(year < 2010, "before 2010", "after 2010"))
+         year_2groups = ifelse(year < 2013, "before 2012", "after 2012"))
 ```
 
-Does the common genre of Manga change over time? Words on the right of
-the line are the genre that are found more after 2010. Red color refers
-to a higher proportion.
+## What is the difference in genre between the early and later time?
+
+In the plot, words on the right of the line are the genre that are found
+more after 2012, and words in red refer to a higher proportion in
+general. The words near the line are the genre found both in the early
+and later time with similar proportion. The result shows that the topic
+becomes more and diverse after 2012, such as school life, historical,
+and cultivation.
 
 ``` r
 # plot the comparison of genre frequency of Manga for different time periods
@@ -299,9 +329,9 @@ fre_year_groups <-
               values_from = proportion)
 
 ggplot(fre_year_groups, 
-       aes(x = `after 2010`, 
-           y = `before 2010`, 
-           color = abs(`before 2010` - `after 2010`))) +
+       aes(x = `after 2012`, 
+           y = `before 2012`, 
+           color = abs(`before 2012` - `after 2012`))) +
   geom_abline(color = "gray40", lty = 2) +
   geom_jitter(alpha = 0.5, size = 0.5, width = 0.1, height = 0.1) +
   geom_text(aes(label = text), check_overlap = TRUE, vjust = 0.2) +
@@ -311,8 +341,8 @@ ggplot(fre_year_groups,
                        low = "lavenderblush4", 
                        high = "red3") +
   theme(legend.position = "none") +
-  labs(y = "before 2010", 
-       x = "after 2010")
+  labs(y = "before 2012", 
+       x = "after 2012")
 ```
 
 ![](Manga-data-explore_files/figure-gfm/proportion-two-periods-1.png)<!-- -->
