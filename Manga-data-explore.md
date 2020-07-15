@@ -119,7 +119,7 @@ df_manga_top_100 %>%
   #remove above line to get order in year, .desc = TRUE can reverse the order 
   ggplot(aes(x=year, y=rank, fill=year)) +
   geom_boxplot() +
-  geom_jitter(color="grey", alpha=0.6, size=0.9) +
+  geom_jitter(alpha=0.8, size=0.9) +
   scale_fill_viridis(discrete=TRUE) +
   scale_y_reverse(limits = c(100, 1), 
                   breaks = c(seq(100, 1,by = -10), 1)) +
