@@ -17,9 +17,11 @@ library(purrr)
 # Introduction
 
 Manga are Japanese comics or graphic novels that are very popular in the
-present day, especially in Asia. This is my exploration of top 100 Manga
-in recent years. The data is collected from
-<https://www.anime-planet.com/manga/top-manga>.
+present day, especially in Asia. This is my exploration of the top 100
+Manga since 1982 based on the data collected from
+<https://www.anime-planet.com/manga/top-manga>. The data includes the
+top 100 Manga, the year when they were first published, and tags
+describing their topics.
 
 ``` r
 # create base url for multi-page
@@ -75,11 +77,11 @@ df_manga_top_100 <-
 
 ## What are those top 100 Manga?
 
-We can see that there are many popular Manga in recent years after 2010
-that shows the more recent Manga, the more popular. However, there are
-some Manga in top 5 in the earlier time, such as Fullmetal Alchemist,
-Berserk, and One piece, representing the classic ones, especially
-Fullmetal Alchemist, also one of my favorites.
+We can see that there are many popular Manga in the recent years after
+2012, which shows that the newer the Manga, the more popular it is.
+However, three out of five of the top five Manga were released before
+2002, such as Fullmetal Alchemist, Berserk, and One piece, representing
+the classic, especially Fullmetal Alchemist, also one of my favorites.
 
 ``` r
 # plot the top 50 Manga by year
@@ -103,13 +105,14 @@ df_manga_top_100 %>%
 
 ![](Manga-data-explore_files/figure-gfm/plot-top-50-1.png)<!-- -->
 
-## What are the ranking of Manga per year?
+## What are their ranking across the years
 
-The bar plot shows that high rank Manga (top 1-25) seem distribute
-evenly across years, but some more in 2016-2018. Despite the total
-number of Manga per year increasing after 2012, the proportion of low
-rank ones (top 76-100) are also higher. We can see that Manga in 2015
-and 2020 seem have lower rank in general in the box plot.
+The bar plot shows that the higher-ranking Manga (top 1-25) seems to be
+distributed throughout the years with a higher number in 2016-2018.
+Despite the total number of Manga increasing with time after 2012, the
+proportion of lower-ranking ones (top 76-100) is also higher. In
+addition, we can see that Manga in 2015 and 2020 seems to have a lower
+rank in general according to the box plot.
 
 ``` r
 # bar plot by count over time 
@@ -187,12 +190,14 @@ df <-
   mutate(text = str_remove_all(text, "\\n"))
 ```
 
-## What are popular genre based on the top 100 Manga?
+## What are those popular Manga genres?
 
-Drama is the most popular one, followed by action, fantasy, comedy, and
-romance. Among those genre, “Seinen” is a type of Manga targeting
-audience of young generation that could cover a wide range of topics.
-“BL” is also a special genre that means Boys Love.
+Drama is the most popular genre, followed by action, fantasy, comedy,
+and romance. Among those genres, “Seinen”
+(<https://en.wikipedia.org/wiki/Seinen_manga>) is a type of Manga aimed
+at a younger audience especially men that could cover a wide range of
+topics. “BL” is also a special kind of genre that means Boys Love
+(<https://en.wikipedia.org/wiki/Yaoi>).
 
 ``` r
 # combine manga top 100 info and tags   
@@ -237,11 +242,11 @@ ggplot(tags_com,
 
 ![](Manga-data-explore_files/figure-gfm/genre-top-manga-1.png)<!-- -->
 
-## What is the relationship between popular genre and years?
+## What is the relationship between genres and years?
 
-The box plot shows that Seinen is a common popular genre across years,
+The box plot indicates that Seinen is the most common genre since 1982,
 followed by action. It also shows that BL and Manga based on a web novel
-appear and become popular appear after 2012.
+appear and become popular after 2012.
 
 ``` r
 # extract common tags to a list
@@ -274,10 +279,10 @@ ggplot(rate_tags,
 
 ![](Manga-data-explore_files/figure-gfm/genre-years-relation-1.png)<!-- -->
 
-## How those genre become popular over time?
+## How does each popular genre change over time?
 
-The histogram plots show that most topics become popular after 2012,
-especially drama, comedy, and action.
+The histogram plots show those genres seem to increase significantly
+after 2012, especially the genre of drama, comedy, fantasy, and action.
 
 ``` r
 # plot barplot for years by common tags
@@ -309,14 +314,14 @@ df_manga_t100_tags %>%
          year_2groups = ifelse(year < 2013, "before 2012", "after 2012"))
 ```
 
-## What is the difference in genre between the early and later time?
+## What is the difference in genres between the early and later time?
 
 In the plot, words on the right of the line are the genre that are found
 more after 2012, and words in red refer to a higher proportion in
 general. The words near the line are the genre found both in the early
-and later time with similar proportion. The result shows that the topic
-becomes more and diverse after 2012, such as school life, historical,
-and cultivation.
+and later time with a similar proportion. The result shows that the
+topic increases and becomes diverse after 2012 with different focus,
+such as school life, historical, and martial arts.
 
 ``` r
 # plot the comparison of genre frequency of Manga for different time periods
