@@ -20,7 +20,7 @@ Manga are Japanese comics or graphic novels that are very popular in the
 present day, especially in Asia. This is my exploration of the top 100
 Manga since 1982 based on the data collected from
 <https://www.anime-planet.com/manga/top-manga>. The data includes the
-top 100 Manga, the year when they were first published, and tags
+top 100 Manga, the year when they were first published, and the tags
 describing their topics.
 
 ``` r
@@ -129,7 +129,7 @@ ggplot(df_manga_top_100) +
 ![](Manga-data-explore_files/figure-gfm/barplot-counts-1.png)<!-- -->
 
 ``` r
-# flipped boxplot based on the order of rank
+# boxplot by counts based on ranking over time
 df_manga_top_100 %>% 
   #mutate(year = fct_reorder(year, rank)) %>% 
   #remove above line to get order in year, .desc = TRUE can reverse the order 
@@ -306,7 +306,7 @@ rate_tags %>%
 
 ``` r
 library(scales)
-# tidy the data to have to rank groups for comparison 
+# tidy the data to create rank groups for comparison 
 manga_t100_tags_groups <-
 df_manga_t100_tags %>% 
   mutate(rank = as.numeric(rank), year = as.numeric(year)) %>% 
