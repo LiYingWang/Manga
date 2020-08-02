@@ -87,6 +87,7 @@ Here are some steps to see interactive plot:
 3. Moving your mouse cursor over the point to see the title of each Manga
 
 ```{r plot-top-100}
+library(plotly)
 manga_top_100_inter <-
   df_manga_top_100 %>% 
   pivot_wider(names_from = type,
