@@ -2,7 +2,7 @@
 title: "Exploring popular Manga in recent years"
 author: "Liying Wang"
 date: "7/10/2020"
-always_allow_html: yes
+output: github_document
 ---
 
 ```{r setup, include=FALSE}
@@ -118,13 +118,14 @@ top_100 <- top_100 %>%
             texttemplate = '%{text}', 
             textposition = 'outside')
 
+top_100_inter <-
 top_100 %>% 
   layout(title = "Top 100 Manga and Light Novel",
          xaxis = list(title = "rank"),
          margin = list(l = 100))
 ```
 
-```{r include, echo = FALSE, eval= FALSE}
+```{r include, echo = FALSE, eval= TRUE}
 htmlwidgets::saveWidget(top_100_inter, "index.html")
 file_path <- file.path(here::here("index.html"))
 file_path <- str_replace(file_path, " ", "\\ ")
@@ -137,7 +138,6 @@ htmltools::tags$iframe(
   seamless="seamless",
   frameBorder="0"
 )
-
 ```
 
 ## What are the top 50 Manga?
