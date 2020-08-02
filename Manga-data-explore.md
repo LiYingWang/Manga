@@ -75,7 +75,67 @@ df_manga_top_100 <-
   slice(1:100)
 ```
 
-## What are those top 100 Manga?
+## Let’s explore the top 100 Manga\!
+
+Here are some steps to see interactive plot:
+
+1.  Use binder to open Rstudio in the browser
+2.  Click on knit button to knit the Rmd to HTML
+3.  Moving your mouse cursor over the point to see the title of each
+    Manga
+
+<!-- end list -->
+
+``` r
+library(plotly)
+manga_top_100_inter <-
+  df_manga_top_100 %>% 
+  pivot_wider(names_from = type,
+              values_from = rank)
+
+top_100 <- plot_ly(manga_top_100_inter, 
+                  x = ~ manga, 
+                  y = ~ year, 
+                  name = "manga", 
+                  type = 'scatter',
+                  mode = "markers", 
+                  text = ~title,
+                  marker = list(color = "pink"),
+                  hovertemplate = paste('rank: %{x}', '<br>%{text}<br>'),
+                  texttemplate = '%{text}', textposition = 'outside')
+
+top_100 <- top_100 %>% 
+  add_trace(x = ~ `light novel`, 
+            y = ~ year, 
+            name = "light novel",
+            type = 'scatter',
+            mode = "markers", 
+            text = ~title,
+            marker = list(color = "blue"),
+            hovertemplate = paste('rank: %{x}', '<br>%{text}<br>'),
+            texttemplate = '%{text}', 
+            textposition = 'outside')
+
+top_100_inter <-
+top_100 %>% 
+  layout(title = "Top 100 Manga and Light Novel",
+         xaxis = list(title = "rank"),
+         margin = list(l = 100))
+```
+
+    ## Warning: Ignoring 12 observations
+
+    ## Warning: Ignoring 88 observations
+
+<!--html_preserve-->
+
+<iframe src="/Users/EmilyWang/Desktop/School document/R-fun-project/Manga/index.html" width="100%" height="600" scrolling="no" seamless="seamless" frameBorder="0">
+
+</iframe>
+
+<!--/html_preserve-->
+
+## What are the top 50 Manga?
 
 We can see that there are many popular Manga in the recent years after
 2012, which shows that the newer the Manga, the more popular it is.

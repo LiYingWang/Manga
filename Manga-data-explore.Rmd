@@ -2,10 +2,12 @@
 title: "Exploring popular Manga in recent years"
 author: "Liying Wang"
 date: "7/10/2020"
-output: github_document
 ---
 
-```{r setup, include=FALSE}
+```{r setup1, include=FALSE}
+#rmarkdown::render("Manga-data-explore.Rmd", output_format = "github_document")
+#rmarkdown::render("Manga-data-explore.Rmd", output_format = "html_document")
+
 knitr::opts_chunk$set(echo = TRUE,
                       dpi=300,
                       fig.width=7)
@@ -86,7 +88,7 @@ Here are some steps to see interactive plot:
 2. Click on knit button to knit the Rmd to HTML
 3. Moving your mouse cursor over the point to see the title of each Manga
 
-```{r plot-top-100}
+```{r plot-top-100, warning=FALSE}
 library(plotly)
 manga_top_100_inter <-
   df_manga_top_100 %>% 
@@ -116,10 +118,27 @@ top_100 <- top_100 %>%
             texttemplate = '%{text}', 
             textposition = 'outside')
 
+top_100_inter <-
 top_100 %>% 
   layout(title = "Top 100 Manga and Light Novel",
          xaxis = list(title = "rank"),
          margin = list(l = 100))
+```
+
+```{r include, echo = FALSE}
+htmlwidgets::saveWidget(top_100_inter, "index.html")
+file_path <- file.path(here::here("index.html"))
+file_path <- str_replace(file_path, " ", "\\ ")
+
+htmltools::tags$iframe(
+  src= file_path,
+  width="100%",
+  height="600",
+  scrolling="no",
+  seamless="seamless",
+  frameBorder="0"
+)
+
 ```
 
 ## What are the top 50 Manga?
