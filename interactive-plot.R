@@ -1,15 +1,14 @@
 library(plotly)
 
-manga_top_50_inter <-
+manga_top_100_inter <-
   df_manga_top_100 %>% 
-  slice(1:50) %>% 
   pivot_wider(names_from = type,
               values_from = rank)
 
-top_50 <- plot_ly(manga_top_50_inter, 
+top_100 <- plot_ly(manga_top_100_inter, 
                   x = ~ manga, 
                   y = ~ year, 
-                  name = "mange", 
+                  name = "manga", 
                   type = 'scatter',
                   mode = "markers", 
                   text = ~title,
@@ -17,7 +16,7 @@ top_50 <- plot_ly(manga_top_50_inter,
                   hovertemplate = paste('rank: %{x}', '<br>%{text}<br>'),
                   texttemplate = '%{text}', textposition = 'outside')
 
-top_50 <- top_50 %>% add_trace(x = ~ `light novel`, 
+top_100 <- top_100 %>% add_trace(x = ~ `light novel`, 
                                y = ~ year, 
                                name = "light novel",
                                type = 'scatter',
@@ -27,7 +26,7 @@ top_50 <- top_50 %>% add_trace(x = ~ `light novel`,
                                hovertemplate = paste('rank: %{x}', '<br>%{text}<br>'),
                                texttemplate = '%{text}', textposition = 'outside')
 
-top_50 <- top_50 %>% layout(
-  title = "Top 50 Manga and Light Novel",
+top_100 <- top_100 %>% layout(
+  title = "Top 100 Manga and Light Novel",
   xaxis = list(title = "rank"),
   margin = list(l = 100))
