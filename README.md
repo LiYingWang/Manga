@@ -84,8 +84,8 @@ Here are some steps to view the interactive plot:
     Binder](http://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/LiYingWang/Manga/master?urlpath=rstudio).
     <!-- badges: end --> to open Rstudio in the browser. It may take a
     few minutes.
-2.  The README.Rmd will show up directly in the upper left pane, if not,
-    click on README.Rmd in the lower right pane to open this file.
+2.  Click on README.Rmd in the lower right pane to open this file, which
+    will show up at the upper left pane.
 3.  Run the code chunks from the beginning and interact with the first
     plot by moving your mouse cursor over the point to see the title of
     each Manga.
@@ -122,7 +122,7 @@ top_100 <- top_100 %>%
             texttemplate = '%{text}', 
             textposition = 'outside')
 
-top_100_inter <- 
+top_100_inter <-
 top_100 %>% 
   layout(title = "Top 100 Manga and Light Novel",
          xaxis = list(title = "rank"),
