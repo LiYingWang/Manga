@@ -4,6 +4,9 @@ author: "Liying Wang"
 date: "7/10/2020"
 output: github_document
 ---
+<!-- badges: start -->
+  [![Launch Rstudio Binder](http://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/LiYingWang/Manga/master?urlpath=rstudio)
+  <!-- badges: end -->
 
 ```{r setup, include=FALSE}
 #rmarkdown::render("README.Rmd", output_format = "github_document")
@@ -118,14 +121,13 @@ top_100 <- top_100 %>%
             texttemplate = '%{text}', 
             textposition = 'outside')
 
-top_100_inter <-
 top_100 %>% 
   layout(title = "Top 100 Manga and Light Novel",
          xaxis = list(title = "rank"),
          margin = list(l = 100))
 ```
 
-```{r include, echo = FALSE, eval= TRUE}
+```{r include, echo = FALSE, eval= FALSE}
 htmlwidgets::saveWidget(top_100_inter, "index.html")
 file_path <- file.path(here::here("index.html"))
 file_path <- str_replace(file_path, " ", "\\ ")
