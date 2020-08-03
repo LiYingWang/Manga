@@ -79,10 +79,14 @@ df_manga_top_100 <-
 
 Here are some steps to see interactive plot:
 
-1.  Use binder to open Rstudio in the browser
-2.  Click on knit button to knit the Rmd to HTML
-3.  Moving your mouse cursor over the point to see the title of each
-    Manga
+1.  Click on this `launch binder` button <!-- badges: start -->
+    [![Launch Rstudio
+    Binder](http://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/LiYingWang/Manga/master?urlpath=rstudio)
+    <!-- badges: end --> to open Rstudio in the browser
+2.  Choose ‘New’ -\> ‘RStudio Session’, click on README.Rmd in the lower
+    right pane to open this file
+3.  Interact with the plot by moving your mouse cursor over the point to
+    see the title of each Manga
 
 <!-- end list -->
 
@@ -116,24 +120,12 @@ top_100 <- top_100 %>%
             texttemplate = '%{text}', 
             textposition = 'outside')
 
-top_100_inter <-
+top_100_inter <- 
 top_100 %>% 
   layout(title = "Top 100 Manga and Light Novel",
          xaxis = list(title = "rank"),
          margin = list(l = 100))
 ```
-
-    ## Warning: Ignoring 12 observations
-
-    ## Warning: Ignoring 88 observations
-
-<!--html_preserve-->
-
-<iframe src="/Users/EmilyWang/Desktop/School document/R-fun-project/Manga/index.html" width="100%" height="600" scrolling="no" seamless="seamless" frameBorder="0">
-
-</iframe>
-
-<!--/html_preserve-->
 
 ## What are the top 50 Manga?
 

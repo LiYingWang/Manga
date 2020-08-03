@@ -4,9 +4,6 @@ author: "Liying Wang"
 date: "7/10/2020"
 output: github_document
 ---
-<!-- badges: start -->
-  [![Launch Rstudio Binder](http://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/LiYingWang/Manga/master?urlpath=rstudio)
-  <!-- badges: end -->
 
 ```{r setup, include=FALSE}
 #rmarkdown::render("README.Rmd", output_format = "github_document")
@@ -87,9 +84,11 @@ df_manga_top_100 <-
 
 Here are some steps to see interactive plot:
 
-1. Use binder to open Rstudio in the browser
-2. Click on knit button to knit the Rmd to HTML
-3. Moving your mouse cursor over the point to see the title of each Manga
+1. Click on this `launch binder` button <!-- badges: start -->
+  [![Launch Rstudio Binder](http://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/LiYingWang/Manga/master?urlpath=rstudio)
+  <!-- badges: end --> to open Rstudio in the browser
+2. Choose 'New' -> 'RStudio Session', click on README.Rmd in the lower right pane to open this file 
+3. Interact with the plot by moving your mouse cursor over the point to see the title of each Manga
 
 ```{r plot-top-100, warning=FALSE}
 library(plotly)
@@ -121,13 +120,14 @@ top_100 <- top_100 %>%
             texttemplate = '%{text}', 
             textposition = 'outside')
 
+top_100_inter <- 
 top_100 %>% 
   layout(title = "Top 100 Manga and Light Novel",
          xaxis = list(title = "rank"),
          margin = list(l = 100))
 ```
 
-```{r include, echo = FALSE, eval= FALSE}
+```{r include, echo = FALSE, include= FALSE}
 htmlwidgets::saveWidget(top_100_inter, "index.html")
 file_path <- file.path(here::here("index.html"))
 file_path <- str_replace(file_path, " ", "\\ ")
