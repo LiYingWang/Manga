@@ -77,16 +77,18 @@ df_manga_top_100 <-
 
 ## Let’s explore the top 100 Manga\!
 
-Here are some steps to see interactive plot:
+Here are some steps to view the interactive plot:
 
 1.  Click on this `launch binder` button <!-- badges: start -->
     [![Launch Rstudio
-    Binder](http://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/LiYingWang/Manga/master?urlpath=rstudio)
-    <!-- badges: end --> to open Rstudio in the browser
-2.  Choose ‘New’ -\> ‘RStudio Session’, click on README.Rmd in the lower
-    right pane to open this file
-3.  Interact with the plot by moving your mouse cursor over the point to
-    see the title of each Manga
+    Binder](http://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/LiYingWang/Manga/master?urlpath=rstudio).
+    <!-- badges: end --> to open Rstudio in the browser. It may take a
+    few minutes.
+2.  The README.Rmd will show up directly in the upper left pane, if not,
+    click on README.Rmd in the lower right pane to open this file.
+3.  Run the code chunks from the beginning and interact with the first
+    plot by moving your mouse cursor over the point to see the title of
+    each Manga.
 
 <!-- end list -->
 
@@ -104,7 +106,7 @@ top_100 <- plot_ly(manga_top_100_inter,
                   type = 'scatter',
                   mode = "markers", 
                   text = ~title,
-                  marker = list(color = "Black"),
+                  marker = list(color = "blue"),
                   hovertemplate = paste('rank: %{x}', '<br>%{text}<br>'),
                   texttemplate = '%{text}', textposition = 'outside')
 
@@ -115,7 +117,7 @@ top_100 <- top_100 %>%
             type = 'scatter',
             mode = "markers", 
             text = ~title,
-            marker = list(color = "grey"),
+            marker = list(color = "pink"),
             hovertemplate = paste('rank: %{x}', '<br>%{text}<br>'),
             texttemplate = '%{text}', 
             textposition = 'outside')
