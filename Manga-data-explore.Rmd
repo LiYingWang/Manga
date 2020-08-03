@@ -102,7 +102,7 @@ top_100 <- plot_ly(manga_top_100_inter,
                   type = 'scatter',
                   mode = "markers", 
                   text = ~title,
-                  marker = list(color = "pink"),
+                  marker = list(color = "Black"),
                   hovertemplate = paste('rank: %{x}', '<br>%{text}<br>'),
                   texttemplate = '%{text}', textposition = 'outside')
 
@@ -113,7 +113,7 @@ top_100 <- top_100 %>%
             type = 'scatter',
             mode = "markers", 
             text = ~title,
-            marker = list(color = "blue"),
+            marker = list(color = "grey"),
             hovertemplate = paste('rank: %{x}', '<br>%{text}<br>'),
             texttemplate = '%{text}', 
             textposition = 'outside')
